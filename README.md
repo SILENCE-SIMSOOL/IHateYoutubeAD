@@ -6,7 +6,7 @@ IHateYoutubeAD is a browser extension that effectively removes all ads that inte
 
 ## How to use?
 ### Edge
-![image](https://github.com/user-attachments/assets/b19d66d3-d4d8-4a1c-a9e8-0960bf148ff3)
+![image](https://github.com/user-attachments/assets/b19d66d3-d4d8-4a1c-a9e8-0960bf148ff3)  
 1. Open the **extension settings** with `edge://extensions/`.  
 ![image](https://github.com/user-attachments/assets/34aa51ce-c647-4494-a5cb-babc59c41e67)  
 2. Enable `Developer mode`.  
