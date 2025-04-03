@@ -14,10 +14,10 @@ IHateYoutubeAD is a browser extension that effectively removes all ads that inte
 ![image](https://github.com/user-attachments/assets/34aa51ce-c647-4494-a5cb-babc59c41e67)  
 
 
-3. Click to `Load unpacked` and select IHateYoutubeAD folder.
+3. Click to `Load unpacked` and select IHateYoutubeAD folder.  
 ![image](https://github.com/user-attachments/assets/4954e62e-f75f-475f-8ec1-2539922fd69d)  
 
 
-4. Finish!
+4. Finish!  
 ![image](https://github.com/user-attachments/assets/98567357-45d6-4aa1-ad67-27ffff9a4029)  
 
