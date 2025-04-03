@@ -25,111 +25,87 @@
 */
 
 (function() {
-    const adblocker = true;
-    const removePopup = false;
-    let currentUrl = window.location.href;
+    let loopAD = 0;
     let isAdFound = false;
-    let adLoop = 0;
-    let videoPlayback = 1;
+    let currentUrl = window.location.href;
 
-    if (adblocker) removeAds();
-    if (removePopup) popupRemover();
+    iHateYoutubeAD();
 
-    function popupRemover() {
-        setInterval(() => {
-            const modalOverlay = document.querySelector("tp-yt-iron-overlay-backdrop");
-            const popup = document.querySelector(".style-scope ytd-enforcement-message-view-model");
-            const popupButton = document.getElementById("dismiss-button");
-            const video = document.querySelector('video');
+    function iHateYoutubeAD() {
+        var videoPlayback = 1;
 
-            document.body.style.setProperty('overflow-y', 'auto', 'important');
-
-            if (modalOverlay) {
-                modalOverlay.removeAttribute("opened");
-                modalOverlay.remove();
-            }
-
-            if (popup) {
-                if (popupButton) popupButton.click();
-                popup.remove();
-                if (video) video.play();
-                setTimeout(() => {
-                    if (video) video.play();
-                }, 500);
-            }
-  
-            if (video && video.paused) video.play();
-
-        }, 1000);
-    }
-
-    function removeAds() {
-        setInterval(() => {
-            const video = document.querySelector('video');
-            const ad = document.querySelector('.ad-showing');
+        setInterval(() =>{
+            var video = document.querySelector('video');
+            const ad = [...document.querySelectorAll('.ad-showing')][0];
 
             if (window.location.href !== currentUrl) {
                 currentUrl = window.location.href;
-                removePageAds();
+                removePageAD();
             }
 
             if (ad) {
                 isAdFound = true;
-                adLoop++;
+                loopAD = loopAD + 1;
 
-                if (adLoop < 10) {
-                    const openAdCenterButton = document.querySelector('.ytp-ad-button-icon');
-                    openAdCenterButton?.click();
+                if(loopAD < 10){
+                    const a = document.querySelector('.ytp-ad-button-icon');
+                    a?.click();
 
-                    const blockAdButton = document.querySelector('[label="Block ad"]');
-                    blockAdButton?.click();
+                    const b = document.querySelector('[label="Block ad"]');
+                    b?.click();
 
-                    const blockAdButtonConfirm = document.querySelector('.Eddif [label="CONTINUE"] button');
-                    blockAdButtonConfirm?.click();
+                    const c = document.querySelector('.Eddif [label="CONTINUE"] button');
+                    c?.click();
 
-                    const closeAdCenterButton = document.querySelector('.zBmRhe-Bz112c');
-                    closeAdCenterButton?.click();
+                    const d = document.querySelector('.zBmRhe-Bz112c');
+                    d?.click();
                 }
+                else if (video) video.play();
 
-                const popupContainer = document.querySelector('body > ytd-app > ytd-popup-container > tp-yt-paper-dialog');
-                if (popupContainer && popupContainer.style.display === "") popupContainer.style.display = 'none';
+            var popupContainer = document.querySelector('body > ytd-app > ytd-popup-container > tp-yt-paper-dialog');
+            if (popupContainer && popupContainer.style.display == "") popupContainer.style.display = 'none';
 
-                const skipButtons = [
-                    '.ytp-ad-skip-button-container',
-                    '.ytp-ad-skip-button-modern',
-                    '.videoAdUiSkipButton',
-                    '.ytp-ad-skip-button'
-                ];
+            const skipButtons = [
+                'ytp-ad-skip-button-container',
+                'ytp-ad-skip-button-modern',
+                '.videoAdUiSkipButton',
+                '.ytp-ad-skip-button',
+                '.ytp-ad-skip-button-modern',
+                '.ytp-ad-skip-button',
+                '.ytp-ad-skip-button-slot'
+            ];
 
-                if (video) {
-                    video.playbackRate = 10;
-                    video.volume = 0;
-
-                    skipButtons.forEach(selector => {
+            if (video) {
+                video.playbackRate = 10;
+                video.volume = 0;
+                skipButtons.forEach(selector => {
                     const elements = document.querySelectorAll(selector);
-                    elements?.forEach(element => element?.click());
-                    });
-
-                    video.play();
-                    const randomNumber = Math.random() * (0.5 - 0.1) + 0.1;
-                    video.currentTime = video.duration + randomNumber || 0;
-                }
+                    if (elements && elements.length > 0) {
+                        elements.forEach(element => {
+                            element?.click();
+                        });
+                    }
+                });
+                video.play();
+                let randomNumber = Math.random() * (0.5 - 0.1) + 0.1;
+                video.currentTime = video.duration + randomNumber || 0;
+            }
 
             } else {
-                if (video && video.playbackRate === 10) video.playbackRate = videoPlayback;
+                if (video && video?.playbackRate == 10) video.playbackRate = videoPlayback;
                 if (isAdFound) {
                     isAdFound = false;
-                    if (videoPlayback === 10) videoPlayback = 1;
-                    if (video && isFinite(videoPlayback)) video.playbackRate = videoPlayback;
-                    adLoop = 0;
+                    if (videoPlayback == 10) videoPlayback = 1;
+                    if(video && isFinite(videoPlayback)) video.playbackRate = videoPlayback;
+                    loopAD = 0;
                 }
-                else if (video) videoPlayback = video.playbackRate;
+                else if(video) videoPlayback = video.playbackRate;
             }
-        }, 50);
-        removePageAds();
+        }, 50)
+        removePageAD();
     }
 
-    function removePageAds() {
+    function removePageAD(){
         const sponsor = document.querySelectorAll("div#player-ads.style-scope.ytd-watch-flexy, div#panels.style-scope.ytd-watch-flexy");
         const style = document.createElement('style');
 
@@ -143,7 +119,9 @@
             yt-about-this-ad-renderer,
             yt-mealbar-promo-renderer,
             ytd-statement-banner-renderer,
-            ytd-banner-promo-renderer-background,
+            ytd-ad-slot-renderer,
+            ytd-in-feed-ad-layout-renderer,
+            ytd-banner-promo-renderer-background
             statement-banner-style-type-compact,
             .ytd-video-masthead-ad-v3-renderer,
             div#root.style-scope.ytd-display-ad-renderer.yt-simple-endpoint,
@@ -154,17 +132,20 @@
             ytm-promoted-sparkles-web-renderer,
             masthead-ad,
             tp-yt-iron-overlay-backdrop,
+
             #masthead-ad {
-            display: none !important;
+                display: none !important;
             }
         `;
 
         document.head.appendChild(style);
 
-        sponsor?.forEach(element => {
+        sponsor?.forEach((element) => {
             if (element.getAttribute("id") === "rendering-content") {
-                element.childNodes?.forEach(childElement => {
-                    if (childElement?.data?.targetId && childElement.data.targetId !== "engagement-panel-macro-markers-description-chapters") element.style.display = 'none';
+                element.childNodes?.forEach((childElement) => {
+                    if (childElement?.data.targetId && childElement?.data.targetId !=="engagement-panel-macro-markers-description-chapters"){
+                        element.style.display = 'none';
+                    }
                 });
             }
         });
